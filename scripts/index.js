@@ -85,9 +85,20 @@ async function getUsers() {
    */
 
   // Your code here
-
+  const url = "https://jsonplaceholder.typicode.com/users";
+  
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Failed to fetch users');
+    }
+    const users = await response.json();
+    populateSelectionOptions(users);
+  } catch(error) {
+    console.error(error);
+  }
+  
 }
-
 async function getPosts(user) {
 /**
  * Fetch posts belonging to this user
@@ -95,6 +106,18 @@ async function getPosts(user) {
  */
 
 // Your code here
+const url = `https://jsonplaceholder.typicode.com/posts?userId=${user.id}`;
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Failed to fetch posts');
+    }
+    const posts = await response.json();
+    displayPosts(posts, user.name);
+  } catch(error) {
+    console.error(error);
+  }
 } 
 
 getUsers();
